@@ -17,7 +17,9 @@ test('Example.com page should have correct heading', async ({ page }) => {
 test('Example.com page should navigate to more information page', async ({ page }) => {
   await page.goto('https://example.com/');
 
-  await page.getByRole('link', { name: 'Learn more' }).click();
+  const learnMoreLink = page.getByRole('link', { name: 'Learn more' });
+
+  await learnMoreLink.click();
 
   await expect(page).toHaveURL(/iana.org/);
 });
