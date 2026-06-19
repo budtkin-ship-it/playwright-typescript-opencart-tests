@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 import HeaderComponent from '../../src/opencart/components/header.component';
 import SearchResultsPage from '../../src/opencart/pages/search-results.page';
 import ProductPage from '../../src/opencart/pages/product.page';
+import MiniCartComponent from '../../src/opencart/components/mini-cart.component';
 
 test.describe('OpenCart checkout', () => {
   test.beforeEach(async ({ page }) => {
@@ -12,6 +13,7 @@ test.describe('OpenCart checkout', () => {
     const header = new HeaderComponent(page);
     const searchResultsPage = new SearchResultsPage(page);
     const productPage = new ProductPage(page);
+    const miniCart = new MiniCartComponent(page);
 
     await header.searchFor('iPhone');
     await searchResultsPage.openProduct('iPhone');
@@ -29,8 +31,7 @@ test.describe('OpenCart checkout', () => {
 
     await expect(page.locator('#cart-total')).toContainText('1 item(s)');
 
-    await page.locator('#cart-total').click();
-    await page.getByRole('link', { name: /View Cart/i }).click();
+    await miniCart.openCartPage();
 
     const cartTable = page.locator('#content div.table-responsive table.table-bordered');
     const cartRows = cartTable.locator('tbody tr');
