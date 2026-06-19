@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import HeaderComponent from '../../src/opencart/components/header.component';
 import SearchResultsPage from '../../src/opencart/pages/search-results.page';
+import ProductPage from '../../src/opencart/pages/product.page';
 
 test.describe('OpenCart checkout', () => {
   test.beforeEach(async ({ page }) => {
@@ -10,6 +11,7 @@ test.describe('OpenCart checkout', () => {
   test('should navigate to checkout from cart with added product', async ({ page }) => {
     const header = new HeaderComponent(page);
     const searchResultsPage = new SearchResultsPage(page);
+    const productPage = new ProductPage(page);
 
     await header.searchFor('iPhone');
     await searchResultsPage.openProduct('iPhone');
@@ -19,7 +21,7 @@ test.describe('OpenCart checkout', () => {
     await expect(addToCartButton).toBeVisible();
     await expect(addToCartButton).toBeEnabled();
 
-    await addToCartButton.click();
+    await productPage.addToCart();
 
     await expect(page.locator('.alert-success')).toContainText(
       'Success: You have added iPhone to your shopping cart!'
