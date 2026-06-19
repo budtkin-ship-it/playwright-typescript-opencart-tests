@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('OpenCart product search', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto('https://opencart.abstracta.us/');
+        await page.goto('/');
     });
 
     test('should find product by search query', async ({ page }) => {

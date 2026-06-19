@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('OpenCart cart', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto('https://opencart.abstracta.us/');
+        await page.goto('/');
     });
 
     test('should add product to cart from product details page', async ({ page }) => {
@@ -11,7 +11,10 @@ test.describe('OpenCart cart', () => {
 
         const productLink = page.locator('.product-layout h4 a', { hasText: 'iPhone' });
 
-        await productLink.click();
+        await Promise.all([
+            page.waitForURL(/route=product\/product/),
+            productLink.click(),
+        ]);
 
         await expect(page.locator('div[id="content"] h1')).toHaveText('iPhone');
 

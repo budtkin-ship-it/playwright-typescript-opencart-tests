@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('OpenCart checkout', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('https://opencart.abstracta.us/');
+    await page.goto('/');
   });
 
   test('should navigate to checkout from cart with added product', async ({ page }) => {
