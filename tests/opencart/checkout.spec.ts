@@ -16,18 +16,13 @@ test.describe('OpenCart checkout', () => {
     await header.searchFor('iPhone');
     const productPage = await searchResultsPage.openProduct('iPhone');
 
-    const addToCartButton = page.locator('#button-cart');
-
-    await expect(addToCartButton).toBeVisible();
-    await expect(addToCartButton).toBeEnabled();
+    await productPage.expectAddToCartAvailable();
 
     await productPage.addToCart();
 
-    await expect(page.locator('.alert-success')).toContainText(
-      'Success: You have added iPhone to your shopping cart!'
-    );
+    await productPage.expectProductAdded('iPhone');
 
-    await expect(page.locator('#cart-total')).toContainText('1 item(s)');
+    await miniCart.expectItemsCount(1);
 
     const cartPage = await miniCart.openCartPage();
 

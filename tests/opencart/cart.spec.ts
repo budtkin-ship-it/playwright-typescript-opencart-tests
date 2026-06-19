@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test } from '@playwright/test';
 import HeaderComponent from '../../src/opencart/components/header.component';
 import SearchResultsPage from '../../src/opencart/pages/search-results.page';
 import MiniCartComponent from '../../src/opencart/components/mini-cart.component';
@@ -16,13 +16,11 @@ test.describe('OpenCart cart', () => {
         await header.searchFor('iPhone');
         const productPage = await searchResultsPage.openProduct('iPhone');
 
-        await expect(page.locator('div[id="content"] h1')).toHaveText('iPhone');
+        await productPage.expectProductName('iPhone');
 
         await productPage.addToCart();
 
-        await expect(page.locator('.alert-success')).toContainText(
-            'Success: You have added iPhone to your shopping cart!'
-        );
+        await productPage.expectProductAdded('iPhone');
 
         const cartPage = await miniCart.openCartPage();
 
