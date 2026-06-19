@@ -1,10 +1,16 @@
-import { Page } from '@playwright/test';
+import { Locator, Page } from '@playwright/test';
 
 export default class HeaderComponent {
-  constructor(private readonly page: Page) {}
+  private readonly searchInput: Locator;
+  private readonly searchButton: Locator;
+
+  constructor(private readonly page: Page) {
+    this.searchInput = this.page.locator('input[name="search"]');
+    this.searchButton = this.page.locator('#search button');
+  }
 
   async searchFor(productName: string) {
-    await this.page.locator('input[name="search"]').fill(productName);
-    await this.page.locator('#search button').click();
+    await this.searchInput.fill(productName);
+    await this.searchButton.click();
   }
 }
