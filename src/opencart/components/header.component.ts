@@ -9,7 +9,7 @@ export default class HeaderComponent {
     this.searchButton = this.page.locator('#search button');
   }
 
-  async searchFor(productName: string) {
+  async searchFor(productName: string): Promise<void> {
     await this.searchInput.fill(productName);
     await this.searchButton.click();
   }

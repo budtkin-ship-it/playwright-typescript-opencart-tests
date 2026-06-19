@@ -7,7 +7,7 @@ export default class ProductPage {
     this.addToCartButton = this.page.locator('#button-cart');
   }
 
-  async addToCart() {
+  async addToCart(): Promise<void> {
     await this.addToCartButton.click();
   }
 }

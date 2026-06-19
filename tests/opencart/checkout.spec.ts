@@ -29,18 +29,11 @@ test.describe('OpenCart checkout', () => {
 
     await expect(page.locator('#cart-total')).toContainText('1 item(s)');
 
-    await miniCart.openCartPage();
+    const cartPage = await miniCart.openCartPage();
 
-    const cartTable = page.locator('#content div.table-responsive table.table-bordered');
-    const cartRows = cartTable.locator('tbody tr');
-
-    await expect(cartRows).toHaveCount(1);
-
-    const productNameLink = cartRows.first().locator('td').nth(1).locator('a');
-
-    await expect(productNameLink).toHaveText('iPhone');
-
-    await page.locator('#content').getByRole('link', { name: 'Checkout' }).click();
+    await cartPage.expectProductsCount(1);
+    await cartPage.expectProductVisible('iPhone');
+    await cartPage.proceedToCheckout();
 
     await expect(page).toHaveURL(/route=checkout\/checkout/);
     await expect(page.locator('div[id="checkout-checkout"] h1')).toHaveText('Checkout');

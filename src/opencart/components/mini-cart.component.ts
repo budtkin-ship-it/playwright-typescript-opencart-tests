@@ -1,4 +1,5 @@
 import { Locator, Page } from '@playwright/test';
+import CartPage from '../pages/cart.page';
 
 export default class MiniCartComponent {
   private readonly cartTotalButton: Locator;
@@ -9,8 +10,10 @@ export default class MiniCartComponent {
     this.viewCartLink = this.page.getByRole('link', { name: /View Cart/ });
   }
 
-  async openCartPage() {
+  async openCartPage(): Promise<CartPage> {
     await this.cartTotalButton.click();
     await this.viewCartLink.click();
+
+    return new CartPage(this.page);
   }
 }

@@ -24,11 +24,8 @@ test.describe('OpenCart cart', () => {
             'Success: You have added iPhone to your shopping cart!'
         );
 
-        await miniCart.openCartPage();
+        const cartPage = await miniCart.openCartPage();
 
-        const cartTable = page.locator('#content table.table-bordered');
-        const productNameLink = cartTable.locator('tbody tr td.text-left a', { hasText: 'iPhone' });
-
-        await expect(productNameLink).toHaveText('iPhone');
+        await cartPage.expectProductVisible('iPhone');
     });
 });
