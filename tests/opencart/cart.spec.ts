@@ -1,4 +1,6 @@
 import { test, expect } from '@playwright/test';
+import HeaderComponent from '../../src/opencart/components/header.component';
+import SearchResultsPage from '../../src/opencart/pages/search-results.page';
 
 test.describe('OpenCart cart', () => {
     test.beforeEach(async ({ page }) => {
@@ -6,15 +8,11 @@ test.describe('OpenCart cart', () => {
     });
 
     test('should add product to cart from product details page', async ({ page }) => {
-        await page.locator('input[name="search"]').fill('iPhone');
-        await page.locator('#search button').click();
+        const header = new HeaderComponent(page);
+        const searchResultsPage = new SearchResultsPage(page);
 
-        const productLink = page.locator('.product-layout h4 a', { hasText: 'iPhone' });
-
-        await Promise.all([
-            page.waitForURL(/route=product\/product/),
-            productLink.click(),
-        ]);
+        await header.searchFor('iPhone');
+        await searchResultsPage.openProduct('iPhone');
 
         await expect(page.locator('div[id="content"] h1')).toHaveText('iPhone');
 
