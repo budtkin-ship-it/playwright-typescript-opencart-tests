@@ -1,4 +1,5 @@
 import { Locator, Page } from '@playwright/test';
+import SearchResultsPage from '../pages/search-results.page';
 
 export default class HeaderComponent {
   private readonly searchInput: Locator;
@@ -9,8 +10,10 @@ export default class HeaderComponent {
     this.searchButton = this.page.locator('#search button');
   }
 
-  async searchFor(productName: string): Promise<void> {
+  async searchFor(productName: string): Promise<SearchResultsPage> {
     await this.searchInput.fill(productName);
     await this.searchButton.click();
+
+    return new SearchResultsPage(this.page);
   }
 }

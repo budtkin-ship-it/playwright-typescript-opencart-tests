@@ -1,6 +1,5 @@
 import { test, expect } from '@playwright/test';
 import HeaderComponent from '../../src/opencart/components/header.component';
-import SearchResultsPage from '../../src/opencart/pages/search-results.page';
 
 test.describe('OpenCart product search', () => {
     test.beforeEach(async ({ page }) => {
@@ -9,27 +8,24 @@ test.describe('OpenCart product search', () => {
 
     test('should find product by search query', async ({ page }) => {
         const header = new HeaderComponent(page);
-        const searchResultsPage = new SearchResultsPage(page);
 
-        await header.searchFor('iPhone');
+        const searchResultsPage = await header.searchFor('iPhone');
         await searchResultsPage.expectLoadedFor('iPhone');
         await searchResultsPage.expectProductVisible('iPhone');
     });
 
     test('should find product by partial search query', async ({ page }) => {
         const header = new HeaderComponent(page);
-        const searchResultsPage = new SearchResultsPage(page);
 
-        await header.searchFor('iPh');
+        const searchResultsPage = await header.searchFor('iPh');
         await searchResultsPage.expectLoadedFor('iPh');
         await searchResultsPage.expectProductVisible('iPhone');
     });
 
     test('should open product details from search results', async ({ page }) => {
         const header = new HeaderComponent(page);
-        const searchResultsPage = new SearchResultsPage(page);
 
-        await header.searchFor('iPhone');
+        const searchResultsPage = await header.searchFor('iPhone');
         const productPage = await searchResultsPage.openProduct('iPhone');
 
         await productPage.expectProductName('iPhone');
