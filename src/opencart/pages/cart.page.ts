@@ -1,4 +1,5 @@
 import { expect, Locator, Page } from '@playwright/test';
+import CheckoutPage from './checkout.page';
 
 export default class CartPage {
   private readonly cartTable: Locator;
@@ -21,7 +22,9 @@ export default class CartPage {
     await expect(this.cartRows).toHaveCount(count);
   }
 
-  async proceedToCheckout(): Promise<void> {
+  async proceedToCheckout(): Promise<CheckoutPage> {
     await this.checkoutLink.click();
+
+    return new CheckoutPage(this.page);
   }
 }

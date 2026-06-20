@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test } from '@playwright/test';
 import HeaderComponent from '../../src/opencart/components/header.component';
 import MiniCartComponent from '../../src/opencart/components/mini-cart.component';
 
@@ -26,9 +26,8 @@ test.describe('OpenCart checkout', () => {
 
     await cartPage.expectProductsCount(1);
     await cartPage.expectProductVisible('iPhone');
-    await cartPage.proceedToCheckout();
+    const checkoutPage = await cartPage.proceedToCheckout();
 
-    await expect(page).toHaveURL(/route=checkout\/checkout/);
-    await expect(page.locator('div[id="checkout-checkout"] h1')).toHaveText('Checkout');
+    await checkoutPage.expectLoaded();
   });
 });
