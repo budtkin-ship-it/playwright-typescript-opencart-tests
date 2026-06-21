@@ -10,11 +10,12 @@ test.describe('DummyJSON products API', () => {
 
     expect(Array.isArray(body.products)).toBe(true);
     expect(body.products.length).toBeGreaterThan(0);
-    expect(
-      body.products.some((product: { title: string }) =>
-        product.title.toLowerCase().includes('phone')
-      )
-    ).toBe(true);
+
+    const hasPhoneProduct = body.products.some((product: { title: string }) =>
+      product.title.toLowerCase().includes('phone')
+    );
+
+    expect(hasPhoneProduct).toBe(true);
   });
 
   test('should get product by id', async ({ request }) => {
