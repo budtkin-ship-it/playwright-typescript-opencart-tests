@@ -14,4 +14,22 @@ test.describe('DummyJSON carts API', () => {
     expect(body.total).toBeGreaterThan(0);
     expect(body.userId).toBeTruthy();
   });
+
+  test('should get carts by user id', async ({ dummyJsonRequest }) => {
+    const response = await dummyJsonRequest.get('/carts/user/5');
+
+    expect(response.status()).toBe(200);
+
+    const body = await response.json();
+
+    expect(Array.isArray(body.carts)).toBe(true);
+    expect(body.carts.length).toBeGreaterThan(0);
+    expect(body.total).toBeGreaterThan(0);
+
+    const hasCartForExpectedUser = body.carts.some((cart: { userId: number }) =>
+      cart.userId === 5
+    );
+
+    expect(hasCartForExpectedUser).toBe(true);
+  });
 });
