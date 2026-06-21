@@ -32,4 +32,14 @@ test.describe('DummyJSON products API', () => {
     expect(body.price).toBeGreaterThan(0);
     expect(body.category).toBeTruthy();
   });
+
+  test('should return not found for non-existing product id', async ({ dummyJsonRequest }) => {
+    const response = await dummyJsonRequest.get('/products/999999');
+
+    expect(response.status()).toBe(404);
+
+    const body = await response.json();
+
+    expect(body.message).toContain('not found');
+  });
 });
