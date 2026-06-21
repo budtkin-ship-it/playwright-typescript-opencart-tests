@@ -1,8 +1,10 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/dummyjson-fixtures';
 
+// dummyJsonRequest is our small API fixture.
+// It keeps the DummyJSON baseURL in one place, so tests can stay cleaner.
 test.describe('DummyJSON products API', () => {
-  test('should search products by query', async ({ request }) => {
-    const response = await request.get('https://dummyjson.com/products/search?q=phone');
+  test('should search products by query', async ({ dummyJsonRequest }) => {
+    const response = await dummyJsonRequest.get('/products/search?q=phone');
 
     expect(response.status()).toBe(200);
 
@@ -18,8 +20,8 @@ test.describe('DummyJSON products API', () => {
     expect(hasPhoneProduct).toBe(true);
   });
 
-  test('should get product by id', async ({ request }) => {
-    const response = await request.get('https://dummyjson.com/products/1');
+  test('should get product by id', async ({ dummyJsonRequest }) => {
+    const response = await dummyJsonRequest.get('/products/1');
 
     expect(response.status()).toBe(200);
 
