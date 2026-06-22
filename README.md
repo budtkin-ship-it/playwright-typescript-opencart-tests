@@ -1,8 +1,8 @@
-# OpenCart UI Test Automation
+# Playwright TypeScript QA Automation Portfolio
 
-This repository is a QA automation portfolio project built with Playwright and TypeScript. It demonstrates automated UI testing of core e-commerce journeys against the [OpenCart demo storefront](https://opencart.abstracta.us/).
+This is a QA automation portfolio project built with Playwright and TypeScript. UI tests cover core e-commerce journeys against the [OpenCart demo storefront](https://opencart.abstracta.us/). API tests cover public REST API scenarios against [DummyJSON](https://dummyjson.com/).
 
-The test suite uses Playwright Test with a focused Page Object Model and Component Object structure to keep reusable page and widget interactions separate from test assertions.
+The UI test suite uses Playwright Test with a focused Page Object Model and Component Object structure to keep reusable page and widget interactions separate from test assertions.
 
 ## Tech Stack
 
@@ -14,7 +14,7 @@ The test suite uses Playwright Test with a focused Page Object Model and Compone
 
 ## Implemented Test Coverage
 
-Current scenarios cover:
+### UI coverage
 
 - Searching for a product by full or partial name
 - Verifying product search results
@@ -23,6 +23,16 @@ Current scenarios cover:
 - Opening the cart through the mini cart widget
 - Verifying the selected product in the cart
 - Navigating from the cart to checkout
+
+### API coverage
+
+- Searching products by query
+- Getting product by id
+- Verifying not found response for a non-existing product
+- Getting cart by id
+- Getting carts by user id
+- Getting user by id
+- Verifying not found response for a non-existing user
 
 ## Project Structure
 
@@ -34,13 +44,22 @@ Current scenarios cover:
 │       │   ├── header.component.ts
 │       │   └── mini-cart.component.ts
 │       └── pages/
+│           ├── cart.page.ts
+│           ├── checkout.page.ts
 │           ├── product.page.ts
 │           └── search-results.page.ts
 ├── tests/
-│   └── opencart/
-│       ├── cart.spec.ts
-│       ├── checkout.spec.ts
-│       └── search.spec.ts
+│   ├── fixtures/
+│   │   ├── dummyjson-fixtures.ts
+│   │   └── opencart-fixtures.ts
+│   ├── opencart/
+│   │   ├── cart.spec.ts
+│   │   ├── checkout.spec.ts
+│   │   └── search.spec.ts
+│   └── api/
+│       ├── products.spec.ts
+│       ├── carts.spec.ts
+│       └── users.spec.ts
 ├── .github/
 │   └── workflows/
 │       └── playwright.yml
@@ -48,7 +67,7 @@ Current scenarios cover:
 └── package.json
 ```
 
-Page and component objects are stored under `src/opencart`. Test specifications are stored under `tests/opencart`.
+Page and component objects are stored under `src/opencart`. UI test specifications are stored under `tests/opencart`. API test specifications are stored under `tests/api`. Shared test fixtures are stored under `tests/fixtures`.
 
 ## Installation
 
@@ -64,9 +83,9 @@ Install the Playwright browsers:
 npx playwright install
 ```
 
-## Running Tests
+## Test execution
 
-Run the complete test suite across all configured browsers:
+Run the complete test suite across all configured Playwright projects:
 
 ```bash
 npm test
@@ -77,6 +96,14 @@ Run the suite in Chromium only:
 ```bash
 npm run test:chromium
 ```
+
+Run API tests:
+
+```bash
+npm run test:api
+```
+
+API tests run through a dedicated Playwright project named `api`, so they are not repeated across browser projects.
 
 Run Chromium tests in headed mode:
 
@@ -106,4 +133,4 @@ GitHub Actions runs the Playwright suite on pushes and pull requests targeting t
 
 This is an active learning and portfolio project. It is intended to demonstrate practical QA automation skills and is being expanded incrementally as new Playwright and test-design concepts are explored.
 
-The application under test is a public demo environment, so availability and test data may occasionally be affected by external changes.
+The systems under test are public demo environments, so availability and test data may occasionally be affected by external changes.
