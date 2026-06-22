@@ -28,9 +28,11 @@ test.describe('DummyJSON products API', () => {
     const body = await response.json();
 
     expect(body.id).toBe(1);
-    expect(body.title).toBeTruthy();
+    expect(typeof body.title).toBe('string');
+    expect(body.title.trim().length).toBeGreaterThan(0);
     expect(body.price).toBeGreaterThan(0);
-    expect(body.category).toBeTruthy();
+    expect(typeof body.category).toBe('string');
+    expect(body.category.trim().length).toBeGreaterThan(0);
   });
 
   test('should return not found for non-existing product id', async ({ dummyJsonRequest }) => {

@@ -12,7 +12,8 @@ test.describe('DummyJSON carts API', () => {
     expect(Array.isArray(body.products)).toBe(true);
     expect(body.products.length).toBeGreaterThan(0);
     expect(body.total).toBeGreaterThan(0);
-    expect(body.userId).toBeTruthy();
+    expect(typeof body.userId).toBe('number');
+    expect(body.userId).toBeGreaterThan(0);
   });
 
   test('should get carts by user id', async ({ dummyJsonRequest }) => {
