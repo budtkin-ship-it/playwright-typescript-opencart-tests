@@ -21,4 +21,14 @@ test.describe('DummyJSON users API', () => {
     expect(typeof body.username).toBe('string');
     expect(body.username.trim().length).toBeGreaterThan(0);
   });
+
+  test('should return not found for non-existing user id', async ({ dummyJsonRequest }) => {
+    const response = await dummyJsonRequest.get('/users/999999');
+
+    expect(response.status()).toBe(404);
+
+    const body = await response.json();
+
+    expect(body.message).toContain('not found');
+  });
 });
