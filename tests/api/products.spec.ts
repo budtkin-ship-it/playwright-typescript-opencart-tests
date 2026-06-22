@@ -35,6 +35,29 @@ test.describe('DummyJSON products API', () => {
     expect(body.category.trim().length).toBeGreaterThan(0);
   });
 
+  test('should add product', async ({ dummyJsonRequest }) => {
+    const productData = {
+      title: 'Test Automation Product',
+      price: 99,
+      description: 'Product created from Playwright API test',
+      category: 'test',
+    };
+
+    const response = await dummyJsonRequest.post('/products/add', {
+      data: productData,
+    });
+
+    expect(response.status()).toBe(201);
+
+    const body = await response.json();
+
+    expect(body.id).toBeGreaterThan(0);
+    expect(body.title).toBe(productData.title);
+    expect(body.price).toBe(productData.price);
+    expect(body.description).toBe(productData.description);
+    expect(body.category).toBe(productData.category);
+  });
+
   test('should return not found for non-existing product id', async ({ dummyJsonRequest }) => {
     const response = await dummyJsonRequest.get('/products/999999');
 
