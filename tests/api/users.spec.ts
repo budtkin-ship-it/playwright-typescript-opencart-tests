@@ -9,9 +9,16 @@ test.describe('DummyJSON users API', () => {
     const body = await response.json();
 
     expect(body.id).toBe(1);
-    expect(body.firstName).toBeTruthy();
-    expect(body.lastName).toBeTruthy();
-    expect(body.email).toBeTruthy();
-    expect(body.username).toBeTruthy();
+    expect(typeof body.firstName).toBe('string');
+    expect(body.firstName.trim().length).toBeGreaterThan(0);
+
+    expect(typeof body.lastName).toBe('string');
+    expect(body.lastName.trim().length).toBeGreaterThan(0);
+
+    expect(typeof body.email).toBe('string');
+    expect(body.email).toContain('@');
+
+    expect(typeof body.username).toBe('string');
+    expect(body.username.trim().length).toBeGreaterThan(0);
   });
 });
