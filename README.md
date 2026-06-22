@@ -69,6 +69,12 @@ The UI test suite uses Playwright Test with a focused Page Object Model and Comp
 
 Page and component objects are stored under `src/opencart`. UI test specifications are stored under `tests/opencart`. API test specifications are stored under `tests/api`. Shared test fixtures are stored under `tests/fixtures`.
 
+## Hooks vs Fixtures
+
+Hooks handle simple setup actions, such as opening the OpenCart homepage before each UI test. Custom fixtures provide reusable test dependencies, including `header`, `miniCart`, and `dummyJsonRequest`.
+
+The API fixture creates a dedicated `APIRequestContext` with the DummyJSON base URL, provides it to each test, and disposes it after the test finishes.
+
 ## Installation
 
 Clone the repository and install the project dependencies:
